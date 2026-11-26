@@ -15,6 +15,14 @@ const REVIEW =
   "Your prompt-writing improved 400% this quarter, mostly because I rewrote every prompt you sent me.";
 
 function main(): void {
+  if (
+    REVIEW.length < 1 ||
+    REVIEW.length > 140 ||
+    REVIEW.includes("\n") ||
+    REVIEW.trim().length === 0
+  ) {
+    throw new Error("entry must be a single line of 1-140 characters");
+  }
   const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, "entry.txt"), REVIEW, "utf-8");
